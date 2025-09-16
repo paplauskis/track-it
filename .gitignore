@@ -3,4 +3,4 @@ bin/
 obj/
 *.Development.json
 *.DotSettings.user
-Domain/Enums/.
+Domain/Enums/*
