@@ -8,5 +8,7 @@ public class FoundItem : Item
     
     public int StatusId { get; set; }
     
+    public DateTime LastStatusUpdateDate { get; set; } = DateTime.UtcNow;
+    
     public string? ImageUrl { get; set; }
 }
