@@ -2,8 +2,12 @@ using Domain.Base;
 
 namespace Domain.Models;
 
-public class FoundItem : Item
+public class FoundItem
 {
+    public Item Item { get; set; }
+    
+    public int ItemId { get; set; }
+    
     public FoundItemStatus Status { get; set; }
     
     public int StatusId { get; set; }
