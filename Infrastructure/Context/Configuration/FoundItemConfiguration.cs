@@ -4,27 +4,36 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Context.Configuration;
 
-public class FoundItemConfiguration : ItemConfiguration<FoundItem>
+public class FoundItemConfiguration : IEntityTypeConfiguration<FoundItem>
 {
-    public override void Configure(EntityTypeBuilder<FoundItem> builder)
+    public void Configure(EntityTypeBuilder<FoundItem> builder)
     {
-        base.Configure(builder);
-
         builder.ToTable("found_item");
+        builder.HasKey(i => i.ItemId);
         
-        builder.HasOne(i => i.Status)
-            .WithMany(s => s.Items)
-            .HasForeignKey(i => i.StatusId)
-            .IsRequired();
+        builder.HasOne(i => i.Item)
+            .WithOne()
+            .HasForeignKey<FoundItem>(i => i.ItemId)
+            .IsRequired()
+            .HasConstraintName("FK_FoundItem_Item");
         
-        builder.Property(x => x.StatusId)
+        builder.Property(i => i.ItemId).HasColumnName("item_id");
+
+        builder.Property(i => i.StatusId)
             .IsRequired()
             .HasColumnName("status_id");
 
         builder.Property(i => i.LastStatusUpdateDate)
             .IsRequired()
             .HasColumnName("last_status_update_date");
-        
-        builder.Property(i => i.ImageUrl).HasColumnName("image_url");
+
+        builder.Property(i => i.ImageUrl)
+            .HasColumnName("image_url");
+
+        builder.HasOne(i => i.Status)
+            .WithMany(s => s.Items)
+            .HasForeignKey(i => i.StatusId)
+            .IsRequired()
+            .HasConstraintName("FK_FoundItem_Status");
     }
 }
