@@ -4,23 +4,25 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Context.Configuration;
 
-public abstract class ItemConfiguration<TEntity> : TimestampedEntityConfiguration<TEntity>
-    where TEntity : Item
+public class ItemConfiguration : TimestampedEntityConfiguration<Item>
 {
-    public override void Configure(EntityTypeBuilder<TEntity> builder)
+    public override void Configure(EntityTypeBuilder<Item> builder)
     {
         base.Configure(builder);
-
+        builder.ToTable("item");
+        
         builder.HasOne(i => i.Address)
             .WithOne()
-            .HasForeignKey<TEntity>(i => i.AddressId)
-            .IsRequired();
+            .HasForeignKey<Item>(i => i.AddressId)
+            .IsRequired()
+            .HasConstraintName("FK_Item_Address");
 
         builder.HasOne(i => i.Type)
             .WithMany()
             .HasForeignKey(i => i.TypeId)
-            .IsRequired();
-        
+            .IsRequired()
+            .HasConstraintName("FK_Item_Type");
+
         builder.Property(i => i.TypeId)
             .IsRequired()
             .HasColumnName("type_id");
