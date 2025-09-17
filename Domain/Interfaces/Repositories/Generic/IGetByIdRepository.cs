@@ -4,5 +4,5 @@ namespace Domain.Interfaces.Repositories.Generic;
 
 public interface IGetByIdRepository<T> where T : BaseEntity
 {
-    Task<T> GetByIdAsync(int id);
+    Task<T?> GetByIdAsync(int id);
 }
