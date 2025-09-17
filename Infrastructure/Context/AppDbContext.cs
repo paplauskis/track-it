@@ -1,3 +1,4 @@
+using Domain.Base;
 using Domain.Models;
 using Infrastructure.Context.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ namespace Infrastructure.Context;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions options) : base(options) { }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
