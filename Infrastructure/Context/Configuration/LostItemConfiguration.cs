@@ -1,16 +1,28 @@
+using Domain.Base;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Context.Configuration;
 
-public class LostItemConfiguration : ItemConfiguration<LostItem>
+public class LostItemConfiguration : IEntityTypeConfiguration<LostItem>
 {
-    public override void Configure(EntityTypeBuilder<LostItem> builder)
+    public void Configure(EntityTypeBuilder<LostItem> builder)
     {
-        base.Configure(builder);
-        
         builder.ToTable("lost_item");
+        builder.HasKey(i => i.ItemId);
+        
+        builder.HasOne(i => i.Item)
+            .WithOne()
+            .HasForeignKey<LostItem>(i => i.ItemId)
+            .IsRequired()
+            .HasConstraintName("FK_LostItem_Item");
+        
+        builder.Property(i => i.ItemId).HasColumnName("item_id");
+        
+        builder.Property(i => i.LostDate)
+            .IsRequired()
+            .HasColumnName("lost_date");
 
         builder.Property(i => i.RewardAmount)
             .IsRequired()
