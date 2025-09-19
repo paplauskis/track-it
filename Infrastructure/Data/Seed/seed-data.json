@@ -1,0 +1,20 @@
+{
+  "ItemType": [
+    { "Id": 1, "Name": "Wallet" },
+    { "Id": 2, "Name": "Phone" },
+    { "Id": 3, "Name": "Keys" },
+    { "Id": 4, "Name": "Jewelry" },
+    { "Id": 5, "Name": "Laptop" },
+    { "Id": 6, "Name": "Headphones" },
+    { "Id": 7, "Name": "Watch" },
+    { "Id": 8, "Name": "Bag" },
+    { "Id": 9, "Name": "Identification" },
+    { "Id": 10, "Name": "Clothing" },
+    { "Id": 11, "Name": "Other" }
+  ],
+  "FoundItemStatus": [
+    { "Id": 1, "Name": "Found" },
+    { "Id": 2, "Name": "Returned" },
+    { "Id": 3, "Name": "Unclaimed" }
+  ]
+}
