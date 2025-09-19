@@ -1,14 +1,33 @@
-using Domain.Base;
 using Domain.Models;
-using Infrastructure.Context.Configuration;
+using Infrastructure.Data.Seed;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Context;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
- 
+    private readonly IConfiguration _configuration;
+
+    public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config) : base(options)
+    {
+        _configuration = config;
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var seedDataWriter = new SeedDataWriter(_configuration);
+        
+        optionsBuilder.UseSeeding((context, _) =>
+        {
+            seedDataWriter.SeedData(context);
+        })
+        .UseAsyncSeeding(async (context, _, _) =>
+        {
+            await seedDataWriter.SeedDataAsync(context);
+        });
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
