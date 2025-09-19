@@ -12,9 +12,6 @@ public class ItemTypeConfiguration : BaseEntityConfiguration<ItemType>
 
         builder.ToTable("item_type");
         
-        builder.Property(i => i.Name)
-            .HasMaxLength(50)
-            .IsRequired()
-            .HasColumnName("name");
+        builder.Property(i => i.Name).HasColumnName("name");
     }
 }

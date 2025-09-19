@@ -12,8 +12,6 @@ public class FoundItemStatusConfiguration : BaseEntityConfiguration<FoundItemSta
         
         builder.ToTable("found_item_status");
 
-        builder.Property(s => s.Status)
-            .IsRequired()
-            .HasColumnName("status");
+        builder.Property(i => i.Name).HasColumnName("name");
     }
 }
