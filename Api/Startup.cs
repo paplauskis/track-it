@@ -1,5 +1,7 @@
+using Domain.Interfaces.Data;
 using Serilog;
 using Infrastructure;
+using Infrastructure.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Host.UseSerilog((context, configuration) =>
 
 var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection");
 builder.Services.AddInfrastructure(connectionString!);
+
+builder.Services.AddScoped<ITypeEntityDataReader, SeedDataReader>();
 
 var app = builder.Build();
 
