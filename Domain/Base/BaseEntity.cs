@@ -2,5 +2,5 @@ namespace Domain.Base;
 
 public abstract class BaseEntity
 {
-    public int Id { get; private set; }
+    public int Id { get; init; }
 }
