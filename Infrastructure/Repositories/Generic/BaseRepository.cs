@@ -5,19 +5,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Repositories.Generic;
 
 public abstract class BaseRepository<TEntity, TContext> :
+    BaseRepositoryCore<TEntity, TContext>,
     IReadRepository<TEntity>,
     IWriteRepository<TEntity>
     where TEntity : BaseEntity
     where TContext : DbContext
 {
-    protected readonly TContext Context;
-    protected DbSet<TEntity> Entities;
-
-    protected BaseRepository(TContext context)
-    {
-        Context = context;
-        Entities = Context.Set<TEntity>();
-    }
+    public BaseRepository(TContext context) : base(context) { }
     
     public virtual async Task<TEntity?> GetByIdAsync(int id)
     {
