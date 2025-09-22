@@ -12,32 +12,38 @@ public class AddressConfiguration : BaseEntityConfiguration<Address>
         
         builder.ToTable("address");
         
-        builder.Property(x => x.Country)
-            .IsRequired()
-            .HasMaxLength(100)
-            .HasColumnName("country");
+        builder.OwnsOne(a => a.Postal, postal =>
+        {
+            postal.Property(x => x.Country)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("country");
         
-        builder.Property(x => x.City)
-            .IsRequired()
-            .HasMaxLength(200)
-            .HasColumnName("city");;
+            postal.Property(x => x.City)
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnName("city");
         
-        builder.Property(x => x.Street)
-            .IsRequired()
-            .HasMaxLength(200)
-            .HasColumnName("street");
+            postal.Property(x => x.Street)
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnName("street");
         
-        builder.Property(x => x.BuildingNumber)
-            .IsRequired()
-            .HasMaxLength(20)
-            .HasColumnName("building_number");
+            postal.Property(x => x.BuildingNumber)
+                .IsRequired()
+                .HasMaxLength(20)
+                .HasColumnName("building_number");
+        });
+
+        builder.OwnsOne(a => a.Geo, geo =>
+        {
+            geo.Property(x => x.Latitude)
+                .IsRequired()
+                .HasColumnName("latitude");
         
-        builder.Property(x => x.Latitude)
-            .IsRequired()
-            .HasColumnName("latitude");
-        
-        builder.Property(x => x.Longitude)
-            .IsRequired()
-            .HasColumnName("longitude");
+            geo.Property(x => x.Longitude)
+                .IsRequired()
+                .HasColumnName("longitude");
+        });
     }
 }
